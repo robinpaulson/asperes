@@ -1,0 +1,3 @@
+#!/bin/bash
+rm -f $1~.wav
+asperes -m sine -f $1.bmp -o $1~.wav

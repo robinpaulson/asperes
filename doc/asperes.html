@@ -1,0 +1,484 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+        <title>The Analysis &amp; Resynthesis Sound Spectrograph : User's Guide</title>
+        <link rel="stylesheet" type="text/css" href="ml.css" />
+    </head>
+<body>
+
+<h2>Audio Spectrograph & Re-Synthesis</h2>
+<h2>User's Guide</h2>
+
+<hr align="left" size="4" color="a0000">
+
+<h3>Content</h3>
+
+<a href="asperes.html#sect1">
+1. Summary</a><br>
+
+<a href="asperes.html#sect2">
+2. License</a><br>
+
+<a href="asperes.html#sect3">
+3. History</a><br>
+
+<a href="asperes.html#sect4">
+4. Operation</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="asperes.html#launch">4.1.Launching the program</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="asperes.html#oper">4.2.Operational modes</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="asperes.html#param">4.3.Selection of parameters</a><br>
+
+<a href="asperes.html#sect5">
+5. Command line parameters</a><br>
+
+<a href="asperes.html#sect6">
+6. Configuration files</a><br>
+
+<a href="asperes.html#sect7">
+7. Building and installing the program</a><br>
+<br>
+
+<hr align="left" size="4" color="a0000">
+
+<a name="sect1">
+<h3>1. Summary</h3>
+
+<p>
+Audio Spectrograph and Re-Synthesis (ASPERES) is a small command line utility
+that can generate images (spectrograms) from sound samples, and sounds from
+arbitrary images.
+</p>
+
+<hr align="left" size="4" color="a0000">
+
+<a name="sect2">
+<h3>2. License</h3>
+
+<p>
+Copyright (C) 2005-2008 Michel Rouzic<br>
+Copyright (C) 2010 Laszlo Menczel<br>
+<br>
+ASPERES is free software distributed under the GNU General Public License
+version 2.<br>
+This program has absolutely NO WARRANTY, you use it at your own risk.
+</p>
+
+<hr align="left" size="4" color="a0000">
+
+<a name="sect3">
+<h3>3. History</h3>
+
+<p>
+ASPERES is based on <a href="http://arss.sf.net">ARSS</a> which was originally
+created by Michel Rouzic in 2005 and went up to version 0.2.3 (the last
+publicly available version). Later Michel extended and converted ARSS to a
+commercial program called <a href="http://photosounder.com"> Photosounder</a>.
+ARSS has been abandoned. I (Laszlo Menczel) found the original program and
+took up its further development in August 2010.
+</p>
+
+<hr align="left" size="4" color="a0000">
+
+<a name="sect4">
+<h3>4. Operation</h3>
+
+<a name="launch">
+<h4>4.1. Launching the program</h4>
+
+<p>
+The latest version of ASPERES is a command line utility which requires that
+all parameters be specified when the program is started (i.e. it has no
+interactive parameter entry functions). The best way of using ASPERES is
+scripting (Windows batch files, Unix shell scripts) to avoid repeated
+typing of parameter lists on the command line.
+</p>
+
+<p>
+In order to make ASPERES easier to use, it has been extended by adding a
+flexible system of configuration files (simple ASCII text files).
+Almost all parameters may be defined in such files. The syntax of
+parameter definition in config files is described in
+<a href="asperes.html#sect6"> Section 6</a>.
+</p>
+
+<p>
+ASPERES uses default config file(s) if avalilable. If the environmental
+variable ASPERES_HOME is defined, the program will try to read a config file
+called 'asperes.ini' from that location. If the environmental variable is
+unset, then ASPERES tries to read this file from the current working directory.
+In case if both files are present then the one in the current working
+directory takes precedence. If the file cannot be found then the parameters
+of ASPERES remain unset (undefined).
+</p>
+
+<p>
+It is possible to instruct ASPERES to use a config file in a different location
+by using the '-c' command line argument (see <a href="asperes.html#sect5">
+Section 5</a>).
+</p>
+
+<p>
+Please note that parameter settings read from a config file have a lower
+precedence and can always be overridden by specifying new values on the
+command line.
+</p>
+
+<a name="oper">
+<h4>4.2. Operational modes</h4>
+
+<p>
+There are three available processing modes in the ASPERES. The first one is
+analysis, the process by which a sound is turned into an image (called a
+spectogram).
+</p>
+
+<p>
+The two other processing modes are synthesis modes. They turn images
+into sounds. Sine and noise synthesis differ slightly in the sound they
+produce because of what type of sound they are based on. Whereas sine
+synthesis consists in mixing together a bunch of modulated sines, which
+is what anyone would think of as pure tones, noise synthesis replaces
+these pure tones with band-pass filtered noise. The first auditory
+difference between the two is that if you synthesise from a plain white
+image, with sine synthesis it will sound as if someone just sat on a
+church organ's keyboard, as with noise synthesis it will sound like pink
+noise (which sounds like white noise except with less treble and more
+bass).
+</p>
+
+<p>
+Another difference can be pictured as follows. Picture an image, let's
+say a spectrogram, that we would vertically enlarge using two different
+methods. The first method would simply consist in smoothly enlarging in,
+in the same way you'd expect any decent image editing program to do.
+That would be noise synthesis. Now, imagine that instead of doing that,
+we cut the image into the thinest possible horizontal slices and that we
+simply put them further apart from each other, on a black background.
+That would be sine synthesis.
+</p>
+
+<p>Now, that last method has an obvious issue, it cuts the continuity
+between image features unless they already are thin distinct and
+perfectly horizontal. And that's the main thing to remember about this
+method, it cuts the vertical continuity. You can hear the effects of
+this by synthesising from a diagonal line, or most noticably from noisy
+sound spectrograms, like drums. These need the vertical continuity of
+noise synthesis for the result to sound right.
+</p>
+
+<p>Unfortunately, noise synthesis has its own flaw. Because of the
+relationship between a sound's spectrum and its envelope, this method
+makes envelopes of the sound it makes noisy, irregular. In simpler
+terms, it will make a piano, guitar note or human voice sound quite
+'bubbly'.
+</p>
+
+<p>That's why it's relatively important to think of all sounds as either
+sines or noises. The way to do it is simply to look at a spectrogram and
+consider anything that looks noisy and covers an area as made out of
+noise, and anything looking like thin continuous lines as made out
+sines. On the other hand, noise synthesis is by far the best general
+purpose synthesis mode, and as such it'll be most of the time the best
+choice of the two synthesis modes.
+</p>
+
+<a name="param">
+<h4>4.3. Selection of parameters</h4>
+
+<p>Minimum and maximum frequency determine how low to how high the range of
+sound we care about goes. It's usually a good idea to let it cover the
+entire human hearing range, which ranges from 20 Hz to 20,000 Hz.
+Because there isn't much to hear under 30 Hz, and because A0 (also known
+as La 0) is right at 27.5 Hz, and because most adults hear little above
+16 kHz, I usually make the lower frequency limit be 27.5 Hz and the
+upper limit be between 16,000 and 20,000 Hz.
+</p>
+
+<p>The bands per octave parameter, or bpo for short, defines the frequency
+resolution, which can also be thought of as the image's vertical
+resolution.
+</p>
+
+<p>It is crucial to note that a higher vertical resolution means a lower
+horizontal resolution. This has to do with the fact that the higher the
+frequency resolution, the smaller the bandwidth gets for each band, and
+that bandwidth equals half the band's envelope's resolution. Therefore
+the quality of the results in analysis mode depend a lot on this
+parameter, and the choice for this parameter depends a lot on the type
+of sound.
+</p>
+
+<p>Basically, time resolution-demanding sounds like drums, explosions and
+such are best reproduced with the bpo parameter set between 2 and 6.
+Human voice, most types of music and high-pitched sounds require between
+12 and 60 bpo. However feel free to experiment with various other settings.
+</p>
+
+<p>Bands per octave means how many horizontal pixel lines there will be in
+an octave. Note that there are roughly 9.5 octaves in our hearing range.
+Also, because there are 12 semi-tones in an octave, it's best when
+dealing with music to choose multiples of 12. Used with a minimum
+frequency set of 27.5 Hz (or a power of 2 of it) it guarantees a neatly
+pitched reproduction of music notes (provided nothing is out of tune to
+begin with).
+</p>
+
+<p>The pixels per seconds (pps for short) parameter is independent from any
+other. It defines the time resolution (independently from the
+aforementioned limitations) and thus the width of your image. Whereas
+you might expect to need about 1,000 pps, it turns out you actually only
+need about 100. 30 pps is quite the lower limit of usability, and you'll
+rarely need as much as 300 pps, no matter what you're doing. Besides, if
+you want to analyse an entire 4 minute-long song, keep in mind that even
+at only 100 pps the resulting image will be 24,000 pixels wide, which is
+about 20 times larger than your average PC screen.
+</p>
+
+<p>It is important to note that four of the parameters, image height,
+frequency resolution (bands per octave) and minimum and maximum
+frequency are interdependant, and because in synthesis mode the image
+height is set by the input image, you can only define two of the other
+three parameters. If you hesitate about which of these paramters to
+omit, choose maximum frequency.
+</p>
+
+<hr align="left" size="4" color="a0000">
+
+<a name="sect5">
+<h4>5. Command Line Parameters</h4>
+
+<p>These are the command line parameters recognized by ASPERES version 0.3.0:
+</p>
+
+<u>Stand alone switches</u>
+
+<p>
+<b>-h</b><br>
+Display help, i.e. a list of command line arguments with a short
+explanation.
+</p> 
+
+<p>
+<b>-v</b><br>
+Display the version of the program as well as the last code
+modification date.
+</p> 
+
+<p>
+<b>-q</b><br>
+Quiet mode, meaning the program will not ask you for any direct
+input and will not output text to the console. Useful for scripting.
+</p> 
+
+<p>
+<b>-l</b><br>
+Linear frequency scale. Produces an output similar to most other
+available spectrographs.
+</p> 
+
+<u>Options with arguments</u>
+
+<p>
+<b>-m [ anal | sine | noise ]</b><br>
+Specifies the program's operation mode. You should chose one of the
+options listed between the brackets.<br><br>
+
+anal = spectrogram creation mode (sound to image)<br>
+sine = sine synthesis mode (image to sound)<br>
+noise = noise synthesis mode (image to sound)<br>
+</p> 
+
+<p>
+<b>-f [name]</b><br>
+The name of the input data file.
+</p>
+
+<p>
+<b>-o [name]</b><br>
+The name of the output file to create.
+</p>
+
+<p>
+<b>-c [name]</b><br>
+Use the configuration file [name] instad of the default 'asperes.ini'.
+</p>
+
+<p>
+<b>-i [float]</b><br>
+Minimum frequency in Hertz, restricted to the range 10-500 Hz.
+</p> 
+
+<p>
+<b>-a [float]</b><br>
+Maximum frequency in Hertz. Note that it's OK if it goes beyond the
+Nyquist frequency (the highest frequency that can be present in a
+digitised sound) regardless of the operation mode. Restricted to the
+range 1000-20000 Hz.
+</p> 
+
+<p>
+<b>-b [integer]</b><br>
+Frequency resolution in Bands Per Octave. This setting should not be
+used together with linear frequancy scale ('-l' switch). Restricted
+to the range 1-64.
+</p> 
+
+<p>
+<b>-p [integer]</b><br>
+Time resolution in Pixels Per Second. Restricted to the range 10-300.
+</p> 
+
+<p>
+<b>-y [integer]</b><br>
+Specifies the desired height of the spectrogram.
+</p>
+
+<p>
+<b>-x [integer]</b><br>
+Specifies the desired width of the spectrogram. The actual output
+size may be 1 pixel shorter or longer.
+</p> 
+
+<p>
+<b>-r [integer]</b><br>
+Sample rate of the output sound. Must be specified in synthesis
+mode, the recommended value for most sounds being 44100. Restricted
+to the values 8000, 11025, 22050, 44100, 48000 and 96000.
+</p> 
+
+<p>
+<b>-g [float]</b><br>
+Brightness of the image, a bit like gamma correction. Restricted to
+the range 0.1-2.0. The program applies the formula 'f(x) = x^1/brightness'
+to output images, and 'f(x) = x^brightness' to input images. The default
+value is 1, giving the image a linear intensity scale and a dynamic range
+of 48 dB, but because this is usually very dark I often use a value of 2,
+which is equivalent to a square root on the output/square on the input,
+and extend the dynamic range to about 96 dB. The dynamic range of the
+spectrogram is given by 'brightness * 48 dB'.
+</p> 
+
+<p>As a minimum, you should specify the options '-m', '-f' and '-o'. '-o'
+may be omitted. In this case the name of the output file will be automatically
+created by appending '~' to the file name part of the name of input file (i.e.
+its name w/o the extension).
+</p>
+
+<hr align="left" size="4" color="a0000">
+
+<a name="sect6">
+<h4>6. Configuration files</h4>
+
+<p>Config files must be pure ASCII so please, don't use MS Word or similar
+word processors to write them. Notepad is fine.
+</p>
+
+<p>Every line in a config file must be either a comment (starting with the
+character '#' in the very first position), an empty line, or the definition
+of a parameter. Parameters are defined as name/value pairs separated by white
+space:
+</p>
+
+<p>[name]  [value]</p>
+
+<p>[name] is the name of the parameter being defined, while [value] is a string
+representing a number (integer or float) or a name, depending on the type of
+parameter being defined. Please, consult <a href="asperes.html#sect5"> Section
+5</a> for the type of values required. The following parameter names are
+allowed (the corresponding command line options are shown in parentheses):
+</p>
+
+<pre><tt>
+  MinFreq      (-i)
+  MaxFreq      (-a)
+  BandPerOct   (-b)
+  PixPerSec    (-p)
+  GammaCorr    (-g)
+  WavRate      (-r)
+</tt></pre>
+
+<p>For an example see the default config file 'asperes.ini' supplied in the
+archive.
+</p>
+
+<p>
+Please note that all the parameters listed above must be defined in the
+config file you want to use, otherwise the program will abort with an error
+message.
+</p>
+
+<hr align="left" size="4" color="a0000">
+
+<a name="sect7">
+<h4>7. Building and installing the program</h4>
+
+<p><i>
+<b>Note for Windows users:</b>
+If you want to build the program yourself, you should have a recent
+version of the MinGW development environment installed. You can get
+it <a href="http://mingw.org">here</a>. Install the MinGW system, then
+create an environment variable called MINGW and set its value to the path
+of the install directory of MinGW (e.g. 'c:\compilers\mingw').
+</i></p>
+
+<p>
+Extract the archive 'asperes-src-0.3.0.zip' to a suitable location on
+your hard disk (e.g. 'c:\dev' or /usr/local'). A new folder called
+'asperes-0.3.0' will be created. Navigate to the build directory called
+'asperes-0.3.0\win32' or 'asperes-0.3.0/linux' and run the build script
+'mk.bat' or 'mk', respectively. In a few seconds you should have the
+executable 'asperes.exe' or 'asperes' ready in the build directory.
+</p>
+
+<p>
+There are three scripts to test if the newly built program works correctly.
+They can be used as follows:
+</p>
+
+<pre><b>
+Windows:
+p2s.bat [name] -> converts the sound 'name' to the image 'name~'
+s2p.bat [name] -> converts the image 'name' to the sound 'name~'
+s2s.bat [name] -> recreates the sound 'name' as sound 'name~'
+
+Linux:
+p-to-s [name] -> converts the sound 'name' to the image 'name~'
+s-to-p [name] -> converts the image 'name' to the sound 'name~'
+s-to-s [name] -> recreates the sound 'name' as sound 'name~'
+</b></pre>
+
+<p>
+A test image (image.bmp) and a test sound (sound.wav) are provided in the
+folder 'asperes\data' for convenience.
+</p>
+
+<p><i>
+<b>Note:</b>
+ASPERES uses a couple of functions from the MUTIL library
+('libmutil.a' in the build directory), a collection of assorted utility
+functions. The description of the API of this library (mutil.html) can be
+found in the folder called 'doc'.
+</i></p>
+
+<p>
+Installation is very simple. You should copy the executable ('asperes.exe'
+for Windows, 'asperes' for Linux), the shared FFT library 'libfftw3.dll'
+(Windows) or 'libfftw3.so.3.1.2' (Linux), and the default configuration file
+'asperes.ini' to a suitable location (e.g. 'c:\asperes' or
+'/usr/local/asperes').
+</p>
+
+<p><i>
+<b>Note for Linux users:</b>
+You may instead install the FFT library to a 'standard' location like
+'/usr/local/lib'. Anyway, regardless where you put it, don't forget to
+create the required symbolic links (in the same folder) so that the chain
+of links is 'libfftw3.so' --> 'libfftw3.so.3' --> 'libfftw3.so.3.1.2'.
+</i></p>
+
+</body>
+</html>

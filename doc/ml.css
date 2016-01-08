@@ -1,0 +1,21 @@
+html
+{
+  margin: 20;
+  padding: 0;
+  height: 100%;
+}
+
+body
+{
+  margin: 10;
+  padding: 0;
+  height: 100%;
+  font-family: arial, helvetica, sans-serif;
+  font-size: 20px;
+  background: url(marble.jpg);
+}
+
+em
+{
+  color: #a00000;
+}

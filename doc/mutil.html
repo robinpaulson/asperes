@@ -1,0 +1,1543 @@
+<!doctype html public "-//w3c//dtd html 3.2//en">
+
+<html>
+<head>
+
+  <title>MUTIL Library API Reference</title>
+  <meta name="keywords" content="">
+  <meta name="Generator" content="HTMLpad">
+  <link rel="stylesheet" type="text/css" href="ml.css" />
+</head>
+
+<body>
+
+<h2>MUTIL -- A Library of C Utility Functions</h2>
+
+<hr align="left" size="4" color="a0000">
+
+<h3>Summary</h3>
+
+MUTIL is a collection of utility functions (written in C)
+including the following features:<br><br>
+
+keyboard input functions (for console mode)<br>
+string to number conversion (better 'atoi' and 'atof')<br>
+functions for parsing command line arguments and INI files<br>
+easy to use (high-level) file name globbing<br>
+string manipulation (tokenization, parsing, etc.)<br>
+logging and tracing functions (useful for debugging)<br>
+file and filename handling utilities <br>
+date/time to string conversion functions<br>
+array manipulation utilities<br>
+comprehensive and uniform error handling<br>
+<br>
+
+<hr align="left" size="4" color="a0000">
+
+<h3>Content</h3>
+
+<a href="mutil.html#sect0">
+1. License terms</a><br>
+<br>
+
+<a href="mutil.html#sect1">
+1. Introduction</a><br>
+<br>
+
+<a href="mutil.html#sect2">
+2. Error handling</a><br>
+<br>
+
+<a href="mutil.html#sect3">
+3. General utilities</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_exec_prog">mut_exec_prog</a><br>
+<br>
+
+<a href="mutil.html#sect4">
+4. Keyboard functions</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_kbd_init">mut_kbd_init</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_kbdclear">mut_kbdclear</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_keypress">mut_keypress</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_getkey">mut_getkey</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_get_str">mut_get_str</a><br>
+<br>
+
+<a href="mutil.html#sect5">
+5. Array manipulation</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_iarray_sum">mut_iarray_sum</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_darray_sum">mut_darray_sum</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_alloc_str_array">mut_alloc_str_array</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_free_str_array">mut_free_str_array</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_create_str_ptrs">mut_create_str_ptrs</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_delete_str_ptrs">mut_delete_str_ptrs</a><br>
+<br>
+
+<a href="mutil.html#sect6">
+6. Date and time functions</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_get_date">mut_get_date</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_get_time">mut_get_time</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_get_date_short">mut_get_date_short</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_make_time_stamp">mut_make_time_stamp</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_systime">mut_systime</a><br>
+<br>
+
+<a href="mutil.html#sect7">
+7. String manipulation</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_strip_ext">mut_strip_ext</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_strip_eol">mut_strip_eol</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_stripn_eol">mut_stripn_eol</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_str_end">mut_str_end</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_strip_quote">mut_strip_quote</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_str_last">mut_str_last</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_str_first">mut_str_first</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_str_find">mut_str_find</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_str_split">mut_str_split</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_str_repl">mut_str_repl</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_str_substr_ptr">mut_str_substr_ptr</a><br>
+
+<br>
+
+<a href="mutil.html#sect8">
+8. String/number conversions</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_stoi">mut_stoi</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_stof">mut_stof</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_itobs">mut_itobs</a><br>
+<br>
+
+<a href="mutil.html#sect9">
+9. Parsing strings</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_skip_delimiter">mut_skip_delimiter</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_skip_space">mut_skip_space</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_get_token_ex">mut_get_token_ex</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_get_token">mut_get_token</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_parse_int">mut_parse_int</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_parse_int_ex">mut_parse_int_ex</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_parse_float">mut_parse_float</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_parse_float_ex">mut_parse_float_ex</a><br>
+<br>
+
+<a href="mutil.html#sect10">
+10. Simple file system utilities</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_fname_char">mut_fname_char</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_file_exist">mut_file_exist</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_file_delete">mut_file_delete</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_file_rename">mut_file_rename</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_fname_split">mut_fname_split</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_fname_get_path">mut_fname_get_path</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_fname_get_name">mut_fname_get_name</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_fname_append">mut_fname_append</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_fname_fix_delim">mut_fget_line</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_fname_fix_delim">mut_fget_line</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_fname_check_len">mut_fname_check_len</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_fname_check_str">mut_fname_check_str</a><br>
+<br>
+
+<a href="mutil.html#sect11">
+11. File and directory name globbing</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_glob_dir">mut_glob_dir</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_glob_discard">mut_glob_discard</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_glob_format">mut_glob_format</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_finfo_hidden">mut_finfo_hidden</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_finfo_is_dir">mut_finfo_is_dir</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_new_glob">mut_new_glob</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_glob_append">mut_glob_append</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_glob_insert">mut_glob_insert</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_glob_fill">mut_glob_fill</a><br>
+<br>
+
+<a href="mutil.html#sect12">
+12. Processing command line arguments</a><br>
+&nbsp;&nbsp;<a href="mutil.html#sect91">
+12.1.  Command line syntax</a><br>
+&nbsp;&nbsp;<a href="mutil.html#sect92">
+12.2.  Specifying the expected arguments in applications</a><br>
+&nbsp;&nbsp;<a href="mutil.html#sect93">
+12.3.  Reading arguments from the command line</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_parse_cmd_line">mut_parse_cmd_line</a><br>
+<br>
+
+<a href="mutil.html#sect13">
+13. Loading configuration (INI) files</a><br>
+&nbsp;&nbsp;<a href="mutil.html#sect101">
+13.1. Format of configuration files</a><br>
+&nbsp;&nbsp;<a href="mutil.html#sect102">
+13.2. Specifying the parameter list in applications</a><br>
+&nbsp;&nbsp;<a href="mutil.html#sect103">
+13.3. Reading the configuration file</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_load_config">mut_load_config</a><br>
+<br>
+
+<a href="mutil.html#sect14">
+14. Debugging functions</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_brkpt">mut_brkpt</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_brkpts">mut_brkpts</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_set_logname">mut_set_logname</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_set_loglimit">mut_set_loglimit</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_settrace">mut_settrace</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_logtrace">mut_logtrace</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_logtrace2">mut_logtrace2</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_logputs">mut_logputs</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_logprintf">mut_logprintf</a><br>
+<br>
+
+<a href="mutil.html#sect15">
+15. Error functions</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_last_error">mut_last_error</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="mutil.html#mut_errmsg">mut_errmsg</a><br>
+<br>
+
+<a href="mutil.html#sect16">
+16. Building and using the library</a><br>
+&nbsp;&nbsp;<a href="mutil.html#sect161">
+16.1. Building</a><br>
+&nbsp;&nbsp;<a href="mutil.html#sect162">
+16.2. Usage</a><br>
+<br>
+
+<hr align="left" size="4" color="a0000">
+
+<a name=sect0>
+<h3>0. License terms</h3>
+
+<p>
+Copyright (C) 2006-2010 Laszlo Menczel (menczel AT invitel DOT hu)
+<br>
+
+This is free software distributed under the GNU Lesser General
+Public Licence (LGPL) version 2.
+<br>
+
+MUTIL is distributed in the hope that it will be useful, but with
+NO WARRANTY expressed or implied.
+</p>
+
+<h4>Special licence clause</h4>
+
+<p>The copyright holder (Laszlo Menczel) hereby grants you the additional right to
+statically link the MUTIL library to your application and distribute the resulting
+binary executable under a licence of your own choice.</p>
+
+<p>The above clause does not free you from the obligation of providing (upon request)
+to the recipients of your binary executable the full source code of the MUTIL library
+used for building said executable. In the documentation accompanying your binary
+executable you must inform the end user that the source code of the library is
+available upon request.
+</p>
+
+<p>If you distribute modified versions of the MUTIL library you must also grant end
+users the additional right of static linking as described above.</p>
+
+<hr align="left" size="4" color="a0000">
+
+<a name="sect1">
+<h3>1. Introduction</h3>
+
+<p>This library is a collection of assorted utilities I have developed while working
+on various software projects. This is general purpose stuff (written in C) which can
+be quite useful (and is frequently needed) but is missing from standard C libraries.
+Among other goodies, you will find here improved versions of the 'fgets', 'atoi' and
+'atof' functions of Glibc, functions for parsing command line arguments and INI
+files, and an easy to use (high-level) file globbing function.</p>
+
+<p>The library can be used under Windows, Linux and DOS. All versions have
+been developed using the GCC compiler system (MinGW under Win32, DJGPP under
+DOS). I guess that other compilers could be used, but I have no motivation
+to do anything about this. Feel free to port the library to any compiler of
+your choice.</p>
+
+<hr align="left" size="4" color="a0000">
+
+<a name="sect2">
+<h3>2. Error handling</h3>
+
+<p>Error handling in the library is performed according to the following general
+principles:</p>
+
+<ul>
+  Functions return zero or a NULL pointer to indicate error. Otherwise a non-zero
+  value or a valid pointer is returned.
+</ul>
+  
+<ul>
+  Every function sets the value of an internal library variable (__mut_errcode) to
+  the appropriate error code when exiting. This value can be obtained by calling
+  <a href="mutil.html#mut_last_error">mut_last_error</a>.
+</ul>
+  
+<p>The following error codes are defined in 'mutil.h':</p>
+
+<pre><b>
+  NO_ERROR                      operation was successful
+
+  MUTERR_BAD_ARG                bad function argument
+  MUTERR_ALLOC                  memory allocation failed
+  MUTERR_FILE                   file open error
+  MUTERR_FILE_TYPE              file type incorrect
+  MUTERR_FILE_READ              error when reading file
+  MUTERR_FILE_WRITE             error when writing file
+  MUTERR_TOO_MANY               too many items
+  MUTERR_TOO_FEW                not enough items
+  MUTERR_BAD_TOKEN              bad token
+  MUTERR_RANGE                  range error
+  MUTERR_EMPTY                  no data (empty)
+  MUTERR_TYPE                   type error
+  MUTERR_SIZE                   size error
+  MUTERR_END_OF_STR             unexpected end of string
+  MUTERR_TIMEOUT                operation timeout
+  MUTERR_DLL_LOAD               cannot load the DLL specified
+  MUTERR_NOT_FOUND              object not found
+  MUTERR_NOT_READY              the device is not ready or not initialized
+  MUTERR_DIR                    directory not found
+  MUTERR_SYSINFO                cannot obtain requested system information
+  MUTERR_OVERFLOW               buffer overflow
+  MUTERR_PARTIAL_READ           only part of the object was retrieved
+  MUTERR_END_OF_FILE            end of file reached
+  MUTERR_WIN32PROC              WinAPI error: process creation failed
+  MUTERR_WIN32WAIT              WinAPI error: cannot wait on specified object
+  MUTERR_WIN32EXITCODE          WinAPI error: cannot get process exit code
+  MUTERR_ACCESS_FILE            cannot access file
+  MUTERR_ACCESS_DIR             cannot access directory
+  MUTERR_SYSCALL                system call failed
+  MUTERR_BUSY                   resource is used by other process
+  MUTERR_READ_ONLY              file or directory is read-only
+
+  MUTERR_BAD_INT                bad integer (not a number?)
+  MUTERR_BAD_FLOAT              bad float (not a number?)
+  MUTERR_INT_BASE               invalid base for integer value
+  MUTERR_TOO_MANY_DIG           too many digits
+  MUTERR_NO_DIG                 no digits
+  MUTERR_NOT_DIG                not a digit
+  MUTERR_EXTRA_CHAR             extra characters in numeric string
+  MUTERR_EXP_RANGE              exponent out of range
+  MUTERR_NO_EXP                 no exponent value specified
+  MUTERR_BAD_EXP                bad exponent value
+  MUTERR_TOO_MANY_DOTS          too many decimal points
+
+  MUTERR_PAR_FILE               cannot open/read config file
+  MUTERR_PAR_NAME               parameter name NULL or empty
+  MUTERR_PAR_TYPE               invalid parameter type
+  MUTERR_PAR_VAR                pointer to parameter target variable is NULL
+  MUTERR_PAR_SIZE               size of specified string buffer < 1
+  MUTERR_PAR_INDEX              bad parameter index
+  MUTERR_PAR_VALUE              no value specified for a parameter
+  MUTERR_PAR_CONV               error when converting numeric parameter
+  MUTERR_PAR_LOAD               at least one parameter is not loaded
+
+  MUTERR_ARG_PROGNAME           program name is too long to store
+  MUTERR_ARG_SIZE               argument string too long
+  MUTERR_ARG_NAME               argument not recognized
+  MUTERR_ARG_PARAM              paired argument has no value
+  MUTERR_ARG_PARSIZE            value string too long
+  MUTERR_ARG_BAD_PARAM          invalid characters in a value
+  MUTERR_ARG_DUPLIC             duplicate argument
+  MUTERR_ARG_MISSING            at least one required argument missing
+</b></pre>
+
+<p>There are a couple of functions for error handling, see <a href="mutil.html#sect15">
+Section 15.</a>. The error messages retrieved by <a href="mutil.html#mut_errmsg">
+mut_errmsg</a> are defined in 'error.c', they can be replaced by translated versions
+if necessary.</p>
+
+<hr align="left" size="4" color="a0000">
+
+<a name="sect3">
+<h3>3. General utilities</h3>
+
+<a name="mut_exec_prog">
+<h3><tt><font size="5">int mut_exec_prog(char *prog, int wait, int *retval, char *outfile)<br>
+[Win32 specific]</font></tt></h3>
+
+<p>The version of GLIBC supplied with the MinGW system does not fully implement the
+functions for the execution of a program from another one. The main problem is that
+there is no way to wait for the child program to finish (no 'wait_pid'). This function
+provides the missing functionality using the Win32 system calls 'CreateProcess',
+'WaitForSingleObject' and 'GetExitCodeProcess'.</p>
+
+<p>Runs the program 'prog' as a separate process. 'prog' must be a complete command line
+containing the name (path) of the program and all arguments.</p>
+   
+<p>The behaviour of the function after starting 'prog' is controlled by the value
+of 'wait' as follows:</p>
+   
+<pre><b>  wait == -1     waits until 'prog' terminates and returns a non-zero value
+
+  wait == 0      starts 'prog' and immediately returns a non-zero value
+
+  wait > 0       waits for 'prog' to terminate, but after 'wait' milliseconds returns zero
+                 and sets the error code to MUTERR_TIMEOUT
+</b></pre>
+
+<p>If 'wait' is set to -1, or in case if wait is non-zero and 'prog' terminates within the
+specified time period, the integer variable 'retval' will contain the return code of 'prog',
+otherwise it is set to zero. If '*retval' is NULL, the return code is ignored.</p>
+
+<p>The string 'outfile' may contain a filename to which screen output from 'prog' should
+be redirected. If 'outfile' is NULL, 'stdout' is used. Please note that 'wait' must be
+-1 (wait for termination) if the output of 'prog' is redirected to a file.</p>
+
+<p>Note: This function is provided for starting <b>console</b> mode applications. I have not
+      tested it with GUI mode apps, it will probably fail. You have been warned :-)</p>
+
+<hr align="left" size="4" color="a0000">
+
+<a name="sect4">
+<h3>4. Keyboard functions</h3>
+
+<p>Notes:<br>
+1. These functions should not be used in GUI-mode programs, only for console mode.
+<br>
+2. Under Linux the program using these functions should use the NCURSES library
+and at the start of the program the function 'mut_kbd_init' should be called.</p>
+
+<a name="mut_kbd_init">
+<h3><tt><font size="5">void mut_kbd_init(void)<br>
+[Linux specific]</font></tt></h3>
+
+<p>Initializes the NCURSES library for the keyboard input modules.</p>
+
+<a name="mut_kbdclear">
+<h3><tt><font size="5">void mut_kbdclear(void)</font></tt></h3>
+
+<p>Clears the keyboard input buffer (i.e. 'mut_keypress' will return zero after
+this function has been called).</p>
+
+<a name="mut_keypress">
+<h3><tt><font size="5">int mut_keypress(void)</font></tt></h3>
+
+<p>Returns non-zero if there is at least one character waiting in the keyboard input
+buffer, othwerwise returns zero.</p>
+
+<a name="mut_getkey">
+<h3><tt><font size="5">int mut_getkey(void)</font></tt></h3>
+
+<p>Extracts and returns the next character waiting in the keyboard buffer. If there is
+no character to extract, the function will wait for input. Special key codes returned
+by 'mut_getkey' are defined in 'mutil.h'.</p>
+
+<a name="mut_get_str">
+<h3><tt><font size="5">int mut_get_str(char *buf, int max)</font></tt></h3>
+
+<p>Reads characters from the keyboard input buffer and copies them to 'buf', until the
+RETURN (ENTER) key is pressed. Maximum 'max' characters are copied. The characters
+are echoed to the screen at the current cursor location (the cursor is advanced).
+Pressing ESC aborts input and clears 'buf'. The BACKSPACE key may be used for simple
+editing of the string input.</p>
+
+<hr align="left" size="4" color="a0000">
+
+<a name="sect5">
+<h3>5. Array manipulation</h3>
+
+<a name="mut_iarray_sum">
+<a name="mut_darray_sum">
+<h3><tt><font size="5">int mut_iarray_sum(int *arr, int last_index)<br>
+double mut_darray_sum(double *arr, int last_index)</font></tt></h3>
+
+<p>Return the sum of the elements of an array (integer or double) up to and including
+the element 'last_index'. In case of error the functions return zero. Since zero is
+a legitim sum, you should check the library error code to determine if an error indeed
+occurred when zero is returned.</p>
+
+<a name="mut_alloc_str_array">
+<h3><tt><font size="5">char **mut_alloc_str_array(int count, int size)
+</font></tt></h3>
+
+<p>Creates a string array, i.e. returns an array of <count> pointers to newly
+allocated string buffers, each 'size' characters long.</p>
+
+<a name="mut_free_str_array">
+<h3><tt><font size="5">int mut_free_str_array(char **array, int count)
+</font></tt></h3>
+
+<p>Discards a string array previously created by 'mut_alloc_str_array'. 'count' must
+match the originally specified size of array. There is no check, beware!</p>
+
+<a name="mut_create_str_ptrs">
+<h3><tt><font size="5">int mut_create_str_ptrs(char **array, int count, int size)
+</font></tt></h3>
+
+<p>'array' must be defined as an array of 'count' string pointers. The function
+allocates 'count' new strings buffers each 'size' characters long, and stores the
+pointers in 'array'.</p>
+
+<a name="mut_delete_str_ptrs">
+<h3><tt><font size="5">int mut_delete_str_ptrs(char **array, int count)
+</font></tt></h3>
+
+<p>Discards the string buffers located at the pointers stored in 'array'. 'count' must
+match the originally specified number of buffers. There is no check, beware!</p>
+
+<hr align="left" size="4" color="a0000">
+
+<a name="sect6">
+<h3>6. Date and time functions</h3>
+
+<a name="mut_get_date">
+<h3><tt><font size="5">int mut_get_date(char *buf)</font></tt></h3>
+
+<p>Obtains the local date and time of the system, converts it to a string and stores
+the result in 'buf' using the format 'month day year hour:min:sec'.</p>
+   
+<a name="mut_get_time">
+<h3><tt><font size="5">int mut_get_time(char *buf)</font></tt></h3>
+
+<p>Obtains the local time of the system, converts it to a string and stores the result
+in 'buf' using the format 'hour:min:sec'.</p>
+   
+<a name="mut_get_date_short">
+<h3><tt><font size="5">int mut_get_date_short(char *buf)</font></tt></h3>
+
+<p>Obtains the local date and time of the system, converts it to a string and stores
+the result in 'buf' using the format 'MM/DD/YYYY hour:min:sec'.</p>
+
+<a name="mut_make_time_stamp">
+<h3><tt><font size="5">int mut_make_time_stamp(char *buf)</font></tt></h3>
+
+<p>Obtains the local date and time of the system, converts it to a string and stores
+the result in 'buf' using the format 'YYYY-MM-DD-XXhYYm' where XX is the hour and YY
+is the minute. This is useful for creating a timestamp to be attached to e.g.
+filenames. 'buf' should be large enough to hold at least 18 characters.</p>
+
+<a name="mut_systime">
+<h3><tt><font size=5>unsigned int mut_systime(void)</font></tt></h3>
+
+<p>Returns the MUTIL system time, i.e. the number of milliseconds elapsed
+since this function was called the first time. At the first call it returns
+zero. The returned time value can be used for diffrent timing jobs.</p>
+
+<hr align="left" size="4" color="a0000">
+
+<a name="sect7">
+<h3>7. String manipulation</h3>
+
+<a name="mut_strip_ext">
+<h3><tt><font size="5">int mut_strip_ext(char *s)</font></tt></h3>
+
+<p>Removes the extension (i.e. the section after the last '.' character from 's'.
+Assumes that 's' is a properly formed filename. If no '.' character is present, the
+string is not changed. The maximum length of string 's' defaults to 512 characters.
+</p>
+
+<a name="mut_strip_eol">
+<a name="mut_stripn_eol">
+<h3><tt><font size="5">int mut_strip_eol(char *s)<br>
+int mut_stripn_eol(char *s, int max)</font></tt></h3>
+
+<p>Replaces in 's' the first newline character with zero, then quits. 'mut_stripn_eol' scans
+maximum 'max' characters. Useful for stripping the newline from strings read by
+'fgets'. Returns the position of newline replaced, or zero if failed.
+</p>
+
+<a name="mut_str_end">
+<h3><tt><font size="5">char *mut_str_end(char *s)<br>
+char *mut_strn_end(char *s, int max)</font></tt></h3>
+
+<p>Returns a pointer to the end of string 's' (i.e. to the terminating zero character) or
+NULL if error. 'mut_strn_end' scans maximum 'max' characters.</p>
+
+<a name="mut_strip_quote">
+<h3><tt><font size="5">int mut_strip_quote(char *s, int len)</font></tt></h3>
+
+<p>Removes the quotes from the beginning and end of string 's'. Assumes that the first
+character of 's' is a quote ("). Shifts to the left characters until another quote or
+the end of string is found. Replaces the closing quote with zero. Maximum 'len'
+characters are scanned ('len' must be at least 2).</p>
+
+<a name="mut_str_last">
+<a name="mut_str_first">
+<h3><tt><font size="5">char *mut_str_last(char *s, char c, int len)<br>
+char *mut_str_first(char *s, char c, int len)</font></tt></h3>
+
+<p>Find the last/first occurence of character 'c' in string 's'. Return a pointer
+to its position, or NULL if the character is not present in 's'. Maximum 'len'
+characters are scanned.</p>
+
+<a name="mut_str_find">
+<h3><tt><font size="5">char *mut_str_find(char *s, char c, int len, int dir)</font></tt></h3>
+
+<p>Finds the first or last occurence of character 'c' in string 's' depending on the
+value of 'dir' (MUT_FIND_FIRST or MUT_FIND_LAST, defined in 'mutil.h'). Returns a pointer
+to its position, or NULL if the character is not present in 's'. Maximum 'len'
+characters are scanned.</p>
+
+<p>Note: this is just a wrapper for 'mut_str_first' and 'mut_str_last'.</p>
+
+<a name="mut_str_repl">
+<h3><tt><font size="5">int mut_str_repl(char *s, char old, char new)</font></tt></h3>
+
+<p>Replaces all occurences of the character 'old' in string 's' by 'new'. 'old' may
+be any character except zero. 'new' may be any character including zero.</p>
+
+<a name="mut_str_split">
+<h3><tt><font size="5">char **mut_str_split(char *s, char *delim, int *res)</font></tt></h3>
+
+<p>Splits 's' into substrings using the characters in 'delim' as delimiter. 'delim'
+may be NULL in which case ' ', '\t' and '\n' are used as delimiters. If two or more
+delimiter characters occur in a sequence, they act as a single delimiter.</p>
+
+<p>Returns an array of pointers to newly allocated buffers containing the substrings.
+The integer 'res' is set to the number of substrings found. If an error occurs, 'res'
+is set to an error code and the function returns NULL.</p>
+
+<p>Don't forget to call 'mut_free_string_array()' to discard the returned array if not
+needed any more.</p>
+
+<p>Note: The number of substrings is limited to MUT_MAX_SUB_STRINGS (defined in 'mutil.h').
+If the number of substrings exceeds this value, 'res' is set to MUTERR_TOO_MANY, but the
+return value is a valid pointer to an array which contains pointers to the first
+MUT_MAX_SUB_STRING substrings found.</p>
+
+<a name="mut_str_substr_ptr">
+<h3><tt><font size="5">char **mut_str_substr_ptr(char *buf, char delim, char end)</font></tt></h3>
+
+<p>Scans the string 'buf' and returns an array of string pointers for each substring
+in 'buf' which is delimited by the character 'delim'. Returns NULL in case of error
+and sets the library error code as follows:</p>
+
+<pre><b>
+  MUTERR_BAD_ARG ---> 'buf' is NULL
+  MUTERR_ALLOC -----> cannot allocate the pointer array
+  MUTERR_EMPTY -----> no delimiter 'delim' found in 'buf'
+</b></pre>
+
+<hr align="left" size="4" color="a0000">
+
+<a name="sect8">
+<h3>8. String/number conversion</h3>
+
+<a name="mut_stoi">
+<h3><tt><font size="5">int mut_stoi(char *s, int base, int *dest)</font></tt></h3>
+
+<p>Converts the string 's' to an integer value using number base 'base' (MUT_BASE_BIN,
+MUT_BASE_DEC or MUT_BASE_HEX, these are defined in 'mutil.h'). The result is stored at
+address 'dest'. This is a replacement for the practically useless 'atoi' function
+supplied in the standard C library. This function will properly report any error
+which may occur during conversion.</p>
+
+<a name="mut_stof">
+<h3><tt><font size="5">int mut_stof(char *s, double *dest)</font></tt></h3>
+
+<p>Converts string 's' to a floating point number and stores the result at address
+'dest'. Accepts different formats including scientific notation (exponent specified).
+This is a replacement for the rather primitive 'atof' function supplied in the
+standard C library. This function will properly report any error which may occur
+during conversion.</p>
+
+<a name="mut_itobs">
+<h3><tt><font size="5">int mut_itobs(void *data, int len, char *buf)</font></tt></h3>
+
+<p>This function converts the data value (8, 16 or 32 bit) located at address 'data'
+to a binary string. The length of data is specified in argument 'len'. The string
+is stored in 'buf'.</p>
+
+<hr align="left" size="4" color="a0000">
+
+<a name="sect9">
+<h3>9. Parsing strings</h3>
+
+<a name="mut_skip_delimiter">
+<h3><tt><font size="5">char *mut_skip_delimiter(char *s, char *templ, int len)
+</font></tt></h3>
+
+<p>Scans string 's' to find the first character which is not part of the string
+'templ'. Returns a pointer to this character in the string. Returns NULL if the
+line is empty (no significant characters) or 'len' characters have been scanned w/o
+finding a significant one.</p>
+
+<a name="mut_skip_space">
+<h3><tt><font size="5">char *mut_skip_space(char *s, int len)</font></tt></h3>
+
+<p>Scans string 's' to find the first character which is not a whitespace (i.e.
+'space' or 'tab'). Returns a pointer to this character in the string. Returns NULL
+if the line is empty (no significant characters) or 'len' characters have been
+scanned w/o finding a significant one.</p>
+
+<a name="mut_get_token">
+<a name="mut_get_token_ex">
+<h3><tt><font size="5">
+char *mut_get_token(char *dest, char *buf, char *delim, int maxlen)<br>
+char *mut_get_token_ex(char *dest, char *buf, char *end, char *delim, int maxlen)
+</font></tt></h3>
+
+<p>Scans the string 'buf' and extracts a 'token', i.e. a substring which is separated
+from other parts of the string by characters in the string 'delim'. The token is
+copied to 'dest'. At most 'maxlen' characters are scanned. Returns a pointer to the
+first character beyond the end of token, or NULL if error. 'mut_get_token_ex'
+processes only that part of 'buf' which is between its start and 'end'.</p>
+
+<p>'delim' may be NULL in which case it defaults to 'space' and 'tab'.</p>
+
+<p>When a newline '\n' or a zero character is found, it is assumed that the end of
+string 'buf' has been reached. These characters are also interpreted as delimiters.
+</p>
+
+<a name="mut_parse_int">
+<a name="mut_parse_int_ex">
+<h3><tt><font size="5">
+char *mut_parse_int(char *buf, char *delim, int base, int *dest)<br>
+char *mut_parse_int_ex(char *buf, char *end, char *delim, int base, int *dest)
+</font></tt></h3>
+
+<p>Scan the string 'buf' and extracts a 'token', i.e. a substring which is separated
+from other parts of the string by characters in the string 'delim'. Try to convert the
+extracted token to an integer value using the number base 'base'. If successful,
+the value is copied to the integer variable 'dest'. Return a pointer to the first
+character beyond the end of token, or NULL if error. 'mut_parse_int_ex' processes
+only that part of 'buf' which is between its start and 'end'.</p>
+
+<p>'delim' may be NULL in which case it defaults to 'space' and 'tab'.</p>
+
+<p>When a newline '\n' or a zero character is found, it is assumed that the end of string
+'buf' has been reached. These characters are also interpreted as delimiters.</p>
+
+<a name="mut_parse_float">
+<a name="mut_parse_float_ex">
+<h3><tt><font size="5">
+char *mut_parse_float(char *buf, char *delim, double *dest)<br>
+char *mut_parse_float_ex(char *buf, char *end, char *delim, double *dest)
+</font></tt></h3>
+
+<p>Scan the string 'buf' and extracts a 'token', i.e. a substring which is separated
+from other parts of the string by characters in the string 'delim'. Try to convert the
+extracted token to a double value. If successful, the value is copied to the double
+variable 'dest'. Return a pointer to the first character beyond the end of token, or
+NULL if error. 'mut_parse_float_ex' processes only that part of 'buf' which is
+between its start and 'end'.</p>
+
+<p>'delim' may be NULL in which case it defaults to 'space' and 'tab'.</p>
+
+<p>When a newline '\n' or a zero character is found, it is assumed that the end of string
+'buf' has been reached. These characters are also interpreted as delimiters.</p>
+
+<hr align="left" size="4" color="a0000">
+
+<a name="sect10">
+<h3>10. Simple file system uyilities</h3>
+
+<a name="mut_fname_char">
+<h3><tt><font size="5">int mut_fname_char(char c)</font></tt></h3>
+
+<p>Returns non-zero if character 'c' is legal in a filename, otherwise returns zero.
+This is a partial implementation of the Win32 filename rules, it allows the following
+special characters if compiled for Win32:</p>
+  
+<pre><b><font size="5">
+'a-z' 'A-Z' '0-9' . _ ! @ # $ % ^ & * ( ) [ ] { } = + - < > SPACE
+</font></b></pre>
+
+<p>Under Linux all characters except '/' are allowed.</p>
+
+<p>Note: The tests assume ASCII character encoding.</p>
+
+<a name="mut_file_exist">
+<h3><tt><font size="5">int mut_file_exist(char *name)</font></tt></h3>
+
+<p>Returns non-zero if the file 'name' exists, zero if not or in case of error (NULL
+pointer argument, empty file name, etc.).</p>
+
+<p>Note: The function simply tries to open the file and returns non-zero if the
+operation succeded. Under Linux, file access permisssions may interfere (i.e. any
+file to which you have no access is reported as not found).</p>
+
+<a name="mut_file_delete">
+<a name="mut_file_rename">
+<h3><tt><font size="5">int mut_file_delete(char *name)<br>
+int mut_file_rename(char *old, char *new)</font></tt></h3>
+
+<p>These are just wrappers for the 'unlink' and 'rename' functions in the C library.
+They provide error codes consistent with the error reporting system of MUTIL.</p>
+
+<pre><b>
+  MUTERR_ACCESS_FILE --> acces denied
+  MUTERR_BUSY ---------> file is used by another process
+  MUTERR_READ_ONLY ----> file is read-only
+  MUTERR_UNDEF --------> cause of error is unknown
+</b></pre>
+
+<a name="mut_fname_split">
+<h3><tt><font size="5">int mut_fname_split(char *s, char *path, char *name)
+</font></tt></h3>
+
+<p>Splits the string 's' to a path specification and a filename. These parts
+are copied to 'path' and 'name', respectively. 'path' and 'name' may be NULL
+if the corresponding part is not required. These buffers must be capable of
+holding MUT_MAX_PATH_LEN and MUT_MAX_NAME_LEN characters, respectively. If 's' does
+not contain a path or a filename, the corresponding buffer will contain the
+empty string "". Returns non-zero if OK, zero if the path or name part exceeds
+the limit imposed by the currently used OS.</p>
+
+<p>Note: The '\', '/' or ':' character terminating the path part is *not* removed.</p>
+
+<a name="mut_fname_get_path">
+<a name="mut_fname_get_name">
+<h3><tt><font size="5">int mut_fname_get_path(char *s, char *path)<br>
+int mut_fname_get_name(char *s, char *name)</font></tt></h3>
+
+<p>These are wrappers for 'mut_fname_split' to obtain the filename or path part of
+'s' alone ('mut_fname_split(s, path, NULL)' and 'mut_fname_split(s, NULL, name)').</p>
+
+<a name="mut_fname_append">
+<h3><tt><font size="5">int mut_fname_append(char *name, char *app, int maxlen)</font></tt></h3>
+<p>
+This function appends the string 'app' to the file name part of the path string
+'name' (i.e. inserts it between the name and extension parts). 'name' is supposed
+to be a character buffer (array) that can hold 'maxlen' characters including the
+terminating zero. The length of the new name cannot exceed 'maxlen'.
+</p>
+
+<a name="mut_fget_line">
+<h3><tt><font size="5">int mut_fget_line(char *buf, int len, FILE *f)
+</font></tt></h3>
+
+<p>This is an improved version of 'fgets' providing proper error checking and
+reporting. In case of error plain 'fgets' just returns NULL and you have three
+guesses what the problem may be :-)</p>
+
+<p>'mut_fget_line' reads the next line of file 'f' (using 'fgetc') into the buffer
+'buf'. The return value may be one of the following:
+
+<p><b>positive integer</b><br>
+The line was sucessfully copied, the return value is the number of characters in
+the buffer w/o the terminating zero.</p>
+
+<b>zero</b><br>
+If the library error code is MUTERR_BAD_ARG, one of the arguments was invalid (NULL
+pointer or out of range).<br><br>
+
+If the library error code is MUTERR_FILE_READ, an I/O error occured while reading
+and 'buf' is empty.<br><br>
+
+If the library error code is MUTERR_EMPTY, the line was empty (only a single newline
+character present) and 'buf' is empty as well.<br><br>
+
+If the library error code is MUTERR_END_OF_FILE, the end of file 'f' was reached.
+'buf' may contain some characters (if the last line has not been properly terminated
+by a newline).<br><br>
+
+<b>-1</b><br>
+The line was too long to fit into the buffer. The library error code is set to
+MUTERR_PARTIAL_READ, and 'buf' contains 'len' characters (including the terminating
+zero). The next call will continue reading at the current position in the line.</p>
+
+<p>Notes:<br>
+1. 'f' should be opened in text mode.<br>
+2. 'buf' will always be terminated by a zero character.</p>
+
+<h3><tt><font size="5">int mut_fname_fix_delim(char *path)</font></tt></h3>
+
+<p>Replaces '/' and '\' delimiters so that 'path' conforms to the pathname conventions of
+of the currently used operating system. Returns zero if no replacement was done or an
+error occured (check the error code pof the library), non-zero if delimiters were
+replaced. If 'path' is longer than MUT_MAX_PATH_LEN, it is truncated and the error code
+is set to MUTERR_TOO_MANY.</p>
+
+<a name="mut_fname_check_len">
+<h3><tt><font size="5">int mut_fname_check_len(char *s)</font></tt></h3>
+
+<p>Checks the string 's' which is assumed to be a path to a file or directory,
+or a single filename. Returns non-zero if the path and name parts do not
+exceed the limit for the currently used operating system, otherwise returns
+zero.</p>
+
+<a name="mut_fname_check_str">
+<h3><tt><font size="5">int mut_fname_check_str(char *s)</font></tt></h3>
+
+<p>Checks if the string 's' contains only path delimiters and legal filename
+characters (OS specific). Returns non-zero if yes, zero otherwise.</p>
+
+<hr align="left" size="4" color="a0000">
+
+<a name="sect11">
+<h3>11. File and directory name globbing</h3>
+
+<p>The file globbing module of the GNU Libc is rather primitive (or should I be
+more respectful and say that only low-level functionality is provided?).
+Anyway, if you want to obtain a decent list of files and/or subdirectories
+(with recursive processing of subdirectories, and preferably with all the
+relevant info attached), you have a lot of coding to do. The functions in this
+module of MUTIL will save you the coding work.</p>
+
+<p>You invoke the function 'mut_glob_dir' with the appropriate arguments (see below).
+Information obtained by globbing is returned in a linked list of the following
+structures:</p>
+
+<a name="flist_t">
+<pre><b>#define MUT_MAX_PAH_LEN   256
+
+typedef struct flist_s flist_t;
+
+struct flist_s
+{
+  int     flag;                   // see below
+  int     count;                  // total number of items in 'files'
+  int     filenum;                // number of file items
+  int     dirnum;                 // number of directory items
+  int     dirlen;                 // length of directory name
+  char    dir[MUT_MAX_PATH_LEN];  // name of base directory
+  finfo_t *files;                 // 'finfo_t' array (see below)
+  flist_t *next;                  // next structure in the list
+};
+</b></pre>
+
+<p>The following bitmasks may be used to test 'flag':</p>
+
+<pre><b>  MUT_FLIST_HAS_DIR --> the list 'files' has directory entries
+  MUT_FLIST_EMPTY ----> no items (files or directories) found
+  MUT_FLIST_NO_MATCH -> no files matching the search pattern</b></pre>
+
+<p>Information on individual items (in the array 'files') is stored in the
+following structure:</p>
+
+<pre><b>#define MUT_MAX_NAME_LEN   256
+
+typedef struct
+{
+  int  flag;                     // see below
+  int  len;                      // length of item name
+  char name[MUT_MAX_NAME_LEN];   // item (file or directory) name
+} finfo_t;</b></pre>
+
+<p>The following bitmasks may be used to test 'flag':</p>
+
+<pre><b>
+  MUT_FINFO_IS_DIR --> item is a directory
+  MUT_FINFO_HIDDEN --> item is hidden
+</b></pre>
+
+<p>In the info array files are listed first, then the subdirectories. Both sublists
+are sorted alphabetically. The two special dirctories '.' and '..' are not stored.</p>
+
+<p>If simple (non-recursive) globbing is requested (see 'mut_glob_dir()' below), the
+list returned is actually a single structure. Otherwise the order of items in
+the linked list follows the order of expansion of subdirectories. Consider the
+following directory tree:</p>
+
+<pre><b>
+  current directory
+  |
+   -- dir_a
+  |   |
+  |   |-- file_a1
+  |   |
+  |    -- file_a2
+  |
+  |-- dir_b
+  |   |
+  |   |-- dir_ba
+  |   |   |
+  |   |   |-- file_ba1
+  |   |   |
+  |   |    -- file_ba2
+  |   |    
+  |   |-- dir_bb
+  |   |   |
+  |   |   |-- file_bb1
+  |   |   |
+  |   |    -- file_bb2
+  |   |
+  |   |-- file_b1
+  |   |
+  |    -- file_b2
+  |
+  |-- file_1
+  |
+   -- file_2
+</b></pre>
+
+<p>If you perform recursive globbing, then follow the resulting linked list and
+display the contents of the structures you get:</p>
+
+<pre><b>
+  file_1        structure 1
+  file_2
+  dir_a\
+  dir_b\
+
+  file_a1       structure 2
+  file_a2
+
+  file_b1       structure 3
+  file_b2
+  dir_ba\
+  dir_bb\
+
+  file_ba1      structure 4
+  file_ba2
+
+  file_bb1      structure 5
+  file_bb2
+</b></pre>
+
+<a name="mut_glob_dir">
+<h3><tt><font size="5">flist_t *mut_glob_dir(char *dir, char *pattern, int mode)
+</font></tt></h3>
+
+<p>This function performs file & directory name globbing in the specified directory.
+The following arguments are accepted:</p>
+
+<ul>
+'dir' the name of directory to scan, if NULL, the current directory is used
+</ul>
+
+<ul>
+'pattern' wildcard pattern for filtering files (but *not* subdirectories),
+if NULL then '*.*' is used
+</ul>
+              
+<ul>'mode' mode of operation with the following possible values:
+
+<pre><b>
+  GLOB_SIMPLE --> do not enter subdirectories
+  GLOB_RECURS --> recursively process subdirectories
+</b></pre>
+</ul>
+
+<p>Returns a pointer to a new linked list of <a href="mutil.html#flist_t">
+flist_t</a> structures if the operation was successful. In case of a simple
+(non-recursive) search the list contains a single member only.</p>
+
+<p>A valid pointer return means that the globbing operation was completed w/o
+error. It *does not* automatically mean that there is useful data in any or
+all of the structures in the list. You should check the 'flag' fields of the
+structures for non-fatal errors like the directory being empty or containing
+no files matching the search pattern (see the description of the
+<a href="mutil.html#flist_t"> flist_t</a> type for useful bitmasks).</p>
+
+<p>In case of error the function returns NULL. The error code of the library is
+set to one of the following values:</p>
+
+<pre><b>
+  MUTERR_BAD_ARG -----> 'mode' is unknown
+  MUTERR_ALLOC -------> memory allocation error
+  MUTERR_SYSCALL -----> a system call (getcwd, chdir, etc.) failed
+  MUTERR_ACCESS_DIR --> access denied when opening a (sub)directory
+  MUTERR_OVERFLOW ----> a pathname is longer than MUT_MAX_PATH_LEN
+</b></pre>
+
+<p>The error code can be obtained by <a href="mutil.html#mut_last_error">
+mut_last_error</a>.</p>
+
+<a name="mut_glob_discard">
+<h3><tt><font size="5">int mut_glob_discard(flist_t **list)</font></tt></h3>
+
+<p>Discards the linked list of <a href="mutil.html#flist_t">flist_t</a>
+structures starting with the item to which '*list' points. If a NULL pointer is
+passed, error (zero) is returned. If '*list' is NULL, nothing is done.
+Sets '*list' to NULL after the structures have been destroyed.</p>
+
+<a name="mut_glob_format">
+<h3><tt><font size="5">char *mut_glob_format(flist_t *list, char delim, int mode)
+</font></tt></h3>
+
+<p>Constructs a list of all items in the structures of the linked list 'list'.
+Returns a newly allocated buffer which contains a sequence of strings, one for
+each item (file or directory). The strings contain the names of the items.</p>
+
+<p>The strings are separated by the character 'delim' (pass zero for normal
+string termination). The buffer is always terminated by a zero, regardless of
+the value of 'delim'.</p>
+
+<p>'mode' controls the content of buffer as follows:</p>
+
+<pre><b>
+  MUT_FLIST_ALL  ---> both files and directories
+  MUT_FLIST_FILES --> files only
+  MUT_FLIST_DIRS ---> directories only
+</b></pre>
+
+<p> The flag 'MUT_FLIST_PATH' may be ORed to 'mode' to get a list in which
+filenames are prepended by the appropriate directory name.</p>
+
+<p>Passing zero is equivalent to MUT_FLIST_ALL.</p>
+
+<a name="mut_finfo_hidden">
+<h3><tt><font size="5">int mut_finfo_hidden(finfo_t *f)</font></tt></h3>
+
+<p>This is a convenience function to test if an 'finfo_t' item is hidden or not.
+Returns 1 if yes, zero if not, a negative error code if 'f' is NULL.</p>
+
+<a name="mut_finfo_is_dir">
+<h3><tt><font size="5">int mut_finfo_is_dir(finfo_t *f)</font></tt></h3>
+
+<p>This is a convenience function to test if an 'finfo_t' item is a directory or
+not. Returns 1 if yes, zero if not, a negative error code if 'f' is NULL.</p>
+
+<h3>Lower level functions</h3>
+
+<p>The functions described above are sufficient for most of the normal tasks
+involved in file globbing. For those of you who like to experiment, the library
+provides the following low-level functions.</p>
+
+<a name="mut_new_glob">
+<h3><tt><font size="5">flist_t *mut_new_glob(void)</font></tt></h3>
+
+<p>Returns a pointer to a newly allocated <a href="mutil.html#flist_t">
+flist_t</a> structure.</p>
+
+<a name="mut_glob_append">
+<h3><tt><font size="5">int mut_glob_append(flist_t *f, flist_t *target)
+</font></tt></h3>
+
+<p>Adds the structure 'f' to the end of the linked list starting with 'target'.
+Cannot add an element to an empty list.</p>
+
+<a name="mut_glob_insert">
+<h3><tt><font size="5">int mut_glob_insert(flist_t *f, flist_t *targetm flist_t *pos)
+</font></tt></h3>
+
+<p>Inserts 'f' into the linked list right after the structure 'pos'.</p>
+
+<a name="mut_glob_fill">
+<h3><tt><font size="5">int mut_glob_fill(char *dir, char *patt, flist_t *f)
+</font></tt></h3>
+
+<p>This function obtains information on the items in directory 'dir' and stores
+it in the structure 'f'. 'dir' may be NULL, in this case the current directory
+is used.</p>
+
+<p>The wildcard pattern 'patt' is used for filtering file items in the usual way
+(however, directory items are *not* filtered). Passing NULL or "" means to
+use '*'.</p>
+
+<p>In the 'finfo_t' array of 'f' files are stored first, followed by directories.
+Both sublists are sorted alphabetically (ascending order).</p>
+
+<p>Possible error codes:</p>
+
+<pre><b>
+  MUTERR_BAD_ARG -----> unknown 'mode' value or 'dir' is longer than MUT_MAX_PATH_LEN
+  MUTERR_OVERFLOW ----> name of an item is longer than MUT_MAX_NAME_LEN
+  MUTERR_SYSCALL -----> a system call (getcwd, chdir, etc.) failed
+  MUTERR_ACCESS_DIR --> could not access the directory specified
+</b></pre>
+
+<hr align="left" size="4" color="a0000">
+
+<a name="sect12">
+<h3>12. Processing command line arguments</h3>
+
+<a name="sect121">
+<h3>12.1. Command line syntax</h3>
+
+<p>In order to use the command line parsing utility of this library, the arguments
+must be supplied according to the rules described below:</p>
+
+<ul>
+Arguments must be separated by space characters (therefore, argument strings may not
+contain embedded spaces).
+</ul>
+
+<ul>
+The maximum length of any single argument string is 256 characters (including the
+terminating 0).
+</ul>
+
+<ul>
+Arguments may contain only ASCII characters in the range 33 to 127.
+</ul>
+
+<ul>
+Arguments starting with the '-' character may be one of the following types:<br><br>
+
+  <ul>
+  A stand-alone command line switch, e.g. '-quiet', '-verbose', etc. Switches are
+  always optional.
+  </ul><br>
+
+  <ul>
+  An argument identifier, paired with a parameter string which must be the next
+  argument following the identifier. E.g. '-f input-file', '-o output-file',
+  '-startval -1.0', etc. These arguments can be made mandatory (see below).
+  </ul>
+</ul>
+
+<a name="sect122">
+<h3>12.2. Specifying the expected arguments in applications</h3>
+
+<p>Arguments to search for are specified using the following structure:</p> 
+
+<pre><b>
+  typedef struct arg_list
+  {
+    int  type;       // see below
+    int  req;        // see below
+    char *templ;     // argument string to search for
+    void *dst;       // pointer to integer flag or string buffer
+    int found;       // set to non-zero if this argument was found
+  } arglist_t;
+</b></pre>
+
+<p>'type' may be 'MUT_ARG_SWITCH' or 'MUT_ARG_PAIRED'</p>
+
+<p>'req' may be 'MUT_ARG_REQUIRED' or 'MUT_ARG_OPTIONAL'.</p>
+
+<p>Note: When initializing the defining structure, omit the '-' minus character from
+      the beginning of the string used for the initialization the field 'templ'!
+      E.g. for the definition of the switch '-x' use 'x' only.</p>
+
+<p>The list of allowed and/or required arguments is specified using an array of such
+structures. Please note that there must be an excess terminating element at the end
+of the array, and its type must be set to MUT_ARG_END (types are defined in 'mutil.h').
+</p>
+
+<a name="sect123">
+<h3>12.3. Reading arguments from the command line</h3>
+
+<a name="mut_parse_cmd_line">
+<h3><tt><font size="5">
+int mut_parse_cmd_line(int argc, char *argv[], arglist_t *arglist, char *progname)
+</font></tt></h3>
+
+<p>Parses the array of command line arguments 'argv' which contains 'argc' entries
+(including the name of program at index 0). 'argc' and 'argv' must be the arguments
+passed by the OS to the executing program.</p>
+
+<p>First the name of program in argv[0] is extracted and stored in 'progname'
+(but only if 'progname' is not NULL).</p>
+
+<p>The argument string vector is then searched for the template strings
+specified in the array 'arglist'. If a template is found, the following
+actions are carried out:</p>
+
+<ul>
+If the type of argument is MUT_ARG_SWITCH, the corresponding integer flag
+is set to 1.
+</ul>
+
+<ul>
+If the type of argument is MUT_ARG_PAIRED, the next entry of argv[] is
+checked. If a valid string is found, it is copied to the string
+buffer specified in the 'arglist_t' structure.
+</ul>
+
+<ul>
+In any other case an error is reported and argument parsing stops.
+</ul>
+
+<p>The function returns non-zero if the arguments were successfully parsed, zero in
+case of error. An appropriate error message can be retrieved by calling the function
+<a href="mutil.html#mut_errmsg">mut_errmsg</a>.</p>
+
+<hr align="left" size="4" color="a0000">
+
+<a name="sect13">
+<h3>13. Loading configuration (INI) files</h3>
+
+<p>This function can be used for the initialization of variables or arrays of
+variables (integer, floating point number or string) with values loaded from a
+configuration file.</p>
+
+<a name="sect131">
+<h3>13.1. Format of configuration files</h3>
+
+<p>Configuration files must be ASCII text files. Each line must contain either a
+comment starting with the character '#' in position zero, or a value specification
+in one of the following formats:</p>
+
+<pre><b>
+  name    value
+  name[x] value
+</b></pre>
+
+<p>where 'name' is the description of the parameter, '[x]' is an optional index ('x'
+must be a non-negative integer) and 'value' is the parameter's desired value. These
+two fields must be separated by at least one space character. Additional space
+characters are allowed within the lines in any position (but see the note on string
+parameters below). For example:</p>
+
+<pre><b>
+  DataDirectory  c:/foobar/data
+  ProgName       Widget Factory vers. 1.0
+  ErrorLimit     1.0e-005
+  MaxUser        16
+  Day[0]         Monday
+  Day[1]         Friday
+</b></pre>
+
+<p>Note: In the case of string parameters, all characters up to the end of line
+      (including any spaces) are copied to the destination variable.</p>
+
+<a name="sect132">
+<h3>13.2. Specifying the parameter list in applications</h3>
+
+<p>Parameters to be loaded must be specified in an array of 'config_t' structures:</p> 
+
+<pre><b>
+  typedef struct config_info
+  {
+    int type;       // see below
+    char *name;     // name to search for in the INI file
+    void *var;      // pointer to the variable to initialize
+    int len;        // maximum length if string variable
+    int error;      // set to non-zero if an error occurs
+    int loaded;     // see below
+  } config_t;
+</b></pre>
+
+<p>The array must be terminated with a 'config_t' structure in which 'type' is set to
+'MUT_INI_END'.</p>
+
+<p>'type' indicates what kind of variable is to be initialized as follows:</p>
+
+<pre><b>
+  MUT_INI_INT  MUT_INI_FLT  MUT_INI_STR ----> integer, double or string variable
+  MUT_INI_AINT MUT_INI_AFLT MUT_INI_ASTR ---> integer, double or string array
+</b></pre>
+   
+<a name="sect133">
+<h3>13.3. Reading the configuration file</h3>
+
+<a name="mut_load_config">
+<h3><tt><font size="5">int mut_load_config(char *name, config_t *par)
+</font></tt></h3>
+
+<p>'name' is the name (path) of the configuration file. 'par' is an array of
+'config_t' structures (see above). The function returns non-zero if all parameters
+have been loaded successfully, zero in case of error. In each structure, the field
+'loaded' will indicate how many times the corresponding variable has been updated
+(for arrays it will show how many array elements have been initialized). The field
+'error' will be non-zero if any error occured when processing the value specified
+in the config file.</p>
+
+<p>Please note that any line in the config file which does not have a corresponding
+'config_t' structure in the list is silently ignored. If there is more than one line
+for a parameter, the value of the corresponding variable will be the one specified on
+the last line found. Cases of multiple initialization can be identified by checking
+the values of the 'loaded' fields of the structures.</p>
+
+<hr align="left" size="4" color="a0000">
+
+<a name="sect14">
+<h3>14. Debugging functions</h3>
+
+<p>Together with 'printf', the functions in this module constitute the only debugger
+I ever need :-)</p>
+
+<a name="mut_brkpt">
+<a name="mut_brkpts">
+<h3><tt><font size="5">void mut_brkpt(int num)<br>
+void mut_brkpts(char *msg)</font></tt></h3>
+
+<p>These functions print their argument and wait for the user to press ENTER.</p>
+
+<a name="mut_set_logname">
+<h3><tt><font size="5">void mut_set_logname(char *name)</font></tt></h3>
+
+<p>Sets the name of logfile to use to 'name'. If 'name' is NULL, the name of
+logfile is reset to 'deafult.log'.</p>
+
+<a name="mut_set_loglimit">
+<h3><tt><font size="5">void mut_set_loglimit(int count)</font></tt></h3>
+
+<p>Sets the maximum number of logged messages to 'count'. If count is < 0, the
+limit is set to 1. If it is > MAX_LOG_COUNT (#defined in 'mutil.h'), the limit
+is set to MAX_LOG_COUNT.</p>
+
+<a name="mut_settrace">
+<h3><tt><font size="5">void mut_settrace(int level)</font></tt></h3>
+
+<p>Set tracing level to 'level. This value should be between zero and 2 (inclusive).
+This value controls whether the functions 'mut_logtrace' and 'mut_logtrace2' write to
+the logfile or not (0 = no tracing, 1 = mut_logtrace active, 2 = both active).</p>
+
+<a name="mut_logtrace">
+<a name="mut_logtrace2">
+<h3><tt><font size="5">void mut_logtrace(char *msg)<br>
+void mut_logtrace2(char *msg)</font></tt></h3>
+
+<p>These functions write their arguments to the logfile depending on the value set
+by 'mut_settrace' (see above).</p>
+
+<a name="mut_startlog">
+<h3><tt><font size="5">void mut_startlog(char *name)</font></tt></h3>
+
+<p>Starts the logging system, subsequent messages are written to the file 'name'.</p>
+
+<a name="mut_stoplog">
+<h3><tt><font size="5">void mut_stoplog(void)</font></tt></h3>
+
+<p>Stops logging, log functions (see below) are inactivated.</p>
+
+<a name="mut_logputs">
+<h3><tt><font size="5">void mut_logputs(char *msg)</font></tt></h3>
+
+<p>If logging is curently active, appends 'msg' to the previously designated logfile.
+The file is opened and closed for each transaction, to avoid the corruption of file
+content in case of a program crash.</p>
+
+<a name="mut_logprintf">
+<h3><tt><font size="5">void mut_logprintf(char *format, ...)</font></tt></h3>
+
+<p>If logging is curently active, writes the values of variables as indicated in the
+'format' string and the following arguments ('printf' style) to the previously
+designated logfile. The file is opened and closed for each transaction, to avoid the
+corruption of file content in case of a program crash.</p>
+
+<hr align="left" size="4" color="a0000">
+
+<a name="sect15">
+<h3>15. Error functions</h3>
+
+<p>The functions described below can be used for obtaining the error code and human
+readable info on the cause of errors.</p>
+
+<a name="mut_last_error">
+<h3><tt><font size="5">int mut_last_error(void)</font></tt></h3>
+
+<p>Returns the value of the variable '__mut_errcode', which has the value set by the
+last called library function.</p>
+
+<a name="mut_errmsg">
+<h3><tt><font size="5">char *mut_errmsg(int code)</font></tt></h3>
+
+<p>Returns a pointer to a string which describes the error corresponding to error code
+'code'. This is a <b>static</b> string, do not attempt to free!</p>
+
+<hr align="left" size="4" color="a0000">
+
+<a name="sect16">
+<h3>16. Building and using the library</h3>
+
+<a name="sect161">
+<h3>16.1. Building</h3>
+
+<p>Appropriate Makefiles and build scripts are present in the directories
+'dos', 'win32' and 'linux'. They should work 'out of the box'. In case of
+DOS and Windows you should have the appropriate compiler (DJGPP or MinGW)
+installed on your system and an environmental variable (called 'DJDIR' or
+'MINGW') should be set to the location (absolute path) of the compiler
+system. You can get the above mentioned free compilers here:<br><br>
+
+<a href="http://www.delorie.com/djgpp">DJGPP</a><br>
+<a href="http://mingw.org">MinGW</a>
+</p>
+
+After compiling the library you can install a copy of the new version (and
+the corresponding header 'mutil.h') by running the script 'inst(.bat)' from
+the build directory.
+
+<a name="sect162">
+<h3>16.2. Usage</h3>
+
+<p>Most of the functions in the library depend only on Glibc and (under Linux) on
+'libm' (math libary). The keyboard module under Linux needs the 'ncurses' library.
+Programs using the library should include the header file 'mutil.h' and link to
+the libraries listed above. That's all.</p>
+
+<p>I have tested only the static version of the library. Since it is rather small
+(the Linux lib is just over 40K), linking the static version does not increase the
+size of applications by a significant amount. In fact, shared versions (DLL or .so)
+may not work correctly, since I paid no attention to this aspect when I wrote the
+code. The library is most probably not thread-safe. I have plans to add code to
+protect the relevant variables by mutexes. There may be a couple of functions which
+are not re-entrant.</p>
+
+<a name="sect163">
+<h3>16.3.Binary distributions</h3>
+
+<p>
+Precompiled versions of the MUTIL library are available in the binary
+archive called <b>mutil-bin-1.0.zip</b>. The archive also contains the
+corresponding header file to be used in applications. The libraries
+and the header should be copied to the appropriate locations as follows:
+</p>
+
+<pre><b>
+DOS
+---
+[djgpp-path]\lib\
+[djgpp-path]\include
+
+where [djgpp-path] is the location of the DJGPP compiler
+
+Windows
+-------
+[mingw-path]\lib\
+[mingw-path]\include
+
+where [mingw-path] is the location of the MinGW compiler
+
+Linux
+-----
+/usr/local/lib
+/usr/local/include
+</b></pre>
+<br>
+
+
+</font>
+</body>
+</html>

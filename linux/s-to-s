@@ -1,0 +1,5 @@
+#!/bin/bash
+rm -f $1~.bmp
+rm -f $1~.wav
+asperes -m anal -f $1.wav -o $1~.bmp
+asperes -m sine -f $1~.bmp -o $1~.wav

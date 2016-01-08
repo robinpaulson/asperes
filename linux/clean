@@ -1,0 +1,4 @@
+#!/bin/bash
+rm -f 0err0
+rm -f ./obj/*.o
+rm -f libmutil.a

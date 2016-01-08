@@ -1,0 +1,30 @@
+Command line version
+
+* - configuration system based on ASCII text CFG files, including:
+  - default CFG file to provide parameters on startup
+  - loading any CFG file that contains program parameters
+  *** DONE ***
+
+* loading different image formats (JPG, PNG, TGA, GIF ?, TIFF ?)
+
+* loading different sound formats (MP3, OGG, FLAC ?)
+
+* 1-step sound recreation, i.e. sound -> image -> sound as a single
+  operation, with optional manipulation of the intermediate image
+  (e.g. application of filters)
+
+--------------------------------------------------------------------------
+
+GUI version
+
+* simple GUI with widgets (sliders, spinners, lists) for every parameter
+
+* display & simple manipulation of created or loaded image
+
+* creating sound from a selected area (or areas) of the current image
+
+* playing the created sound (single and loop, start/stop/reset) with
+  optional vertical cursor showing in real time the corresponding image
+  part
+
+* saving current parameters as a CFG file

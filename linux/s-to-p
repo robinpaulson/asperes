@@ -1,0 +1,3 @@
+#!/bin/bash
+rm -f $1~.bmp
+asperes -m anal -f $1.wav -o $1~.bmp

@@ -1,0 +1,15 @@
+Audio Spectrogram and Re-Synthesis (ASPERES)
+********************************************
+
+This is a utility based on the 'Analysis & Resynthesis Sound Spectrograph'
+(ARSS) program originally created by Michel Rouzic (http://arss.sf.net).
+ASPERES can convert a WAV sound to a BMP image (spectrogram), or an arbitrary
+BMP image to a WAV sound file.
+
+The development of ARSS has been abandoned by Michel in favor of a non-free
+GUI version called 'Photosounder' that is more capable than ARSS. I have
+taken up the development. I plan to add a simple GUI to create a free GUI
+version that is easier to use than the original ARSS program.
+
+ARSS is free software distributed under the terms of the GNU General Public
+License version 2. See 'license.txt'.

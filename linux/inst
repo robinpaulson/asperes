@@ -1,0 +1,12 @@
+#!/bin/bash
+
+echo "Installing the MUTIL library (Linux / GCC version)..."
+
+if [ -x libmutil.a ]
+then
+  cp -f libmutil.a /usr/local/lib/libmutil.a
+  cp -f ../src/mutil.h /usr/local/include/mutil.h
+  echo OK
+else
+  echo "*** Error: 'libmutil.a' not found, first run the script 'mk'."
+fi
