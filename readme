@@ -13,3 +13,7 @@ version that is easier to use than the original ARSS program.
 
 ARSS is free software distributed under the terms of the GNU General Public
 License version 2. See 'license.txt'.
+
+The code for this has not been worked on for some time, there are a few things which need fixing before development can progress:
+* Build the code for libmutil; apparently it is part of "minisip", which has not been updated in 17 years.
+* Build on a modern, 64-bit system
