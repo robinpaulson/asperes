@@ -12,14 +12,15 @@ taken up the development. I plan to add a simple GUI to create a free GUI
 version that is easier to use than the original ARSS program.
 
 ARSS is free software distributed under the terms of the GNU General Public
-License version 2. See 'license.txt'.
+License version 2. See 'LICENSE'.
 
 Reboot (2021)
 =============
 The code for this has not been worked on for some time, Laszlo appears to have
-dropped the project. I will try to contine. There are a few things which need
+dropped the project. I will try to continue. There are a few things which need
 fixing before development can progress:
 * Build the code for libmutil (see https://github.com/robinpaulson/libmutil;
   apparently it is part of "minisip", which has not been updated in 17 years.
-* Build asperes on a modern, 64-bit system, the inlcuded binaries are from 2011,
+* Build asperes on a modern, 64-bit system, the included binaries are from 2011,
   built for a 32-bit system
+ 
