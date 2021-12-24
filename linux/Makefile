@@ -6,9 +6,9 @@ src_dir = ../src
 
 obj_dir = ./obj
 
-CFLAGS = -c -Wall -I$(src_dir) -D_LINUX
+CFLAGS = -c -I$(src_dir) -D_LINUX
 
-EXEFLAGS = -Wall -D_LINUX -I$(src_dir) -L.
+EXEFLAGS = -D_LINUX -I$(src_dir) -L.
 
 HDRS = \
        $(src_dir)/dsp.h \

@@ -1,4 +1,4 @@
-/* 
+/*
   util.h - prototypes of utility functions
 
   The Analysis & Resynthesis Sound Spectrograph (ARSS)
@@ -16,18 +16,18 @@
 #define H_UTIL
 
 extern int32_t gettime();
-extern inline double roundoff(double x);
-extern inline int32_t roundup(double x);
+extern double roundoff(double x);
+extern int32_t roundup(double x);
 extern float getfloat();
-extern inline int32_t smallprimes(int32_t x);
-extern inline int32_t nextsprime(int32_t x);
-extern inline double log_b(double x);
-extern inline uint32_t rand_u32();
-extern inline double dblrand();
-extern inline uint16_t fread_le_short(FILE * file);
-extern inline uint32_t fread_le_word(FILE * file);
-extern inline void fwrite_le_short(uint16_t s, FILE * file);
-extern inline void fwrite_le_word(uint32_t w, FILE * file);
+extern int32_t smallprimes(int32_t x);
+extern int32_t nextsprime(int32_t x);
+extern double log_b(double x);
+extern uint32_t rand_u32();
+extern double dblrand();
+extern uint16_t fread_le_short(FILE * file);
+extern uint32_t fread_le_word(FILE * file);
+extern void fwrite_le_short(uint16_t s, FILE * file);
+extern void fwrite_le_word(uint32_t w, FILE * file);
 extern char *getstring();
 extern int32_t str_isnumber(char *string);
 extern void message(char *fmt, ...);
